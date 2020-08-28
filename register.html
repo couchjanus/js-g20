@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href="css/reset.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/grid.css" rel="stylesheet">
+    <link href="css/form.css" rel="stylesheet">
+    <link href="css/nav.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- navbar-->
+    <header class="header bg-white">
+        <div class="container px-3">
+            <nav class="navbar px-0">
+
+                <input class="trigger" type="checkbox" id="hamburgerButton">
+                <label for="hamburgerButton"><a class="navbar-brand" href="index.html"><span class="font-weight-bold text-uppercase text-dark">Shopaholic</span></a></label>
+                <div class="collapse">
+                    <a class="navbar-brand" href="index.html"><span class="font-weight-bold text-uppercase text-dark">Shopaholic</span></a>
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <!-- Link-->
+                            <a class="nav-link active" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <!-- Link-->
+                            <a class="nav-link" href="shop.html">Shop</a>
+                        </li>
+                        <li class="nav-item">
+                            <!-- Link-->
+                            <a class="nav-link" href="contact.html">Contact</a>
+                        </li>
+                        <!-- dropdown-menu -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Pages</a>
+                            <div hidden>
+                                <a href="blog.html">Blog</a>
+                                <a href="about.html">About</a>
+                                <a href="services.html">Services</a>
+                                <a href="help.html">Help</a>
+                                <a href="faq.html">FAQs</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <!-- cart -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="cart.html"> <i class="fas fa-dolly-flatbed text-gray"></i>Cart<small class="text-gray">(2)</small></a>
+                        </li>
+                        <!-- like -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"> <i class="far fa-heart"></i><small class="text-gray"> (0)</small></a>
+                        </li>
+                        <!-- login -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="login.html"> <i class="fas fa-user-alt text-gray"></i>Login</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </nav>
+        </div>
+    </header>
+
+    <!-- Register SECTION-->
+
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- form register -->
+            <form class="text-center border border-light p-5 m-auto" action="#!">
+
+                <h4 class="h4 mb-4">Sign up</h4>
+
+                <div class="row mb-4">
+                    <div class="col-6 mx-0">
+                        <!-- First name -->
+                        <input type="text" class="form-control" placeholder="First name" autofocus>
+                    </div>
+                    <div class="col-6 mx-0">
+                        <!-- Last name -->
+                        <input type="text" class="form-control" placeholder="Last name">
+                    </div>
+                </div>
+
+                <!-- E-mail -->
+                <input type="email" class="form-control mb-4" placeholder="E-mail">
+
+                <!-- Password -->
+                <input type="password" class="form-control" placeholder="Password">
+                <small class="form-text text-muted mb-4">
+                    At least 8 characters and 1 digit
+                </small>
+                <input type="password" class="form-control" placeholder="Confirm Password">
+                <small class="form-text text-muted mb-4">
+                    Retype password again
+                </small>
+
+                <!-- Phone number -->
+                <input type="tel" class="form-control" placeholder="Phone number">
+                <small class="form-text text-muted mb-4">
+                    Optional - for two step authentication
+                </small>
+
+                <!-- Newsletter -->
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="registerFormNewsletter">
+                    <label class="custom-control-label" for="registerFormNewsletter">Subscribe to our
+                        newsletter</label>
+                </div>
+
+                <!-- Sign up button -->
+                <button class="btn btn-dark my-4 btn-block" type="submit">Register</button>
+                <hr>
+                <!-- Terms of service -->
+                <p>By clicking
+                    <em>Sign up</em> you agree to our
+                    <a href="" target="_blank">terms of service</a>
+                </p>
+                <!-- Sign in -->
+                <p>Already a member?
+                    <a href="login.html">Sign in</a>
+                </p>
+            </form>
+            <!-- Default form register -->
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white">
+        <!-- container -->
+        <div class="container py-4">
+            <!-- row -->
+            <div class="row py-5">
+                <!-- 3 columns -->
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h6 class="text-uppercase">Customer services</h6>
+                    <ul class="list-unstyled">
+                        <li><a class="footer-link" href="#">Help &amp; Contact Us</a></li>
+                        <li><a class="footer-link" href="#">Returns &amp; Refunds</a></li>
+                        <li><a class="footer-link" href="#">Online Stores</a></li>
+                        <li><a class="footer-link" href="#">Terms &amp; Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h6 class="text-uppercase">Company</h6>
+                    <ul class="list-unstyled">
+                        <li><a class="footer-link" href="#">What We Do</a></li>
+                        <li><a class="footer-link" href="#">Available Services</a></li>
+                        <li><a class="footer-link" href="#">Latest Posts</a></li>
+                        <li><a class="footer-link" href="#">FAQs</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h6 class="text-uppercase">Social media</h6>
+                    <ul class="list-unstyled">
+                        <li><a class="footer-link" href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a class="footer-link" href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                        <li><a class="footer-link" href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        <li><a class="footer-link" href="#"><i class="fab fa-google-plus"></i> Google</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-top pt-4">
+                <!-- 2 columns -->
+                <div class="row">
+                    <div class="col-lg-6">
+                        <p class="small text-muted mb-0">&copy; 2020 All rights reserved.</p>
+                    </div>
+                    <div class="col-lg-6 text-lg-right">
+                        <p class="text-white reset-anchor">Template designed by <a href="#">My Temple</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+</body>
+
+</html>

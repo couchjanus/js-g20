@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href="css/reset.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/grid.css" rel="stylesheet">
+    <link href="css/form.css" rel="stylesheet">
+    <link href="css/nav.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- navbar-->
+    <header class="header bg-white">
+        <div class="container px-3">
+            <nav class="navbar px-0">
+
+                <input class="trigger" type="checkbox" id="hamburgerButton">
+                <label for="hamburgerButton"><a class="navbar-brand" href="index.html"><span class="font-weight-bold text-uppercase text-dark">Shopaholic</span></a></label>
+                <div class="collapse">
+                    <a class="navbar-brand" href="index.html"><span class="font-weight-bold text-uppercase text-dark">Shopaholic</span></a>
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <!-- Link-->
+                            <a class="nav-link active" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <!-- Link-->
+                            <a class="nav-link" href="shop.html">Shop</a>
+                        </li>
+                        <li class="nav-item">
+                            <!-- Link-->
+                            <a class="nav-link" href="contact.html">Contact</a>
+                        </li>
+                        <!-- dropdown-menu -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Pages</a>
+                            <div hidden>
+                                <a href="blog.html">Blog</a>
+                                <a href="about.html">About</a>
+                                <a href="services.html">Services</a>
+                                <a href="help.html">Help</a>
+                                <a href="faq.html">FAQs</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <!-- cart -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="cart.html"> <i class="fas fa-dolly-flatbed text-gray"></i>Cart<small class="text-gray">(2)</small></a>
+                        </li>
+                        <!-- like -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"> <i class="far fa-heart"></i><small class="text-gray"> (0)</small></a>
+                        </li>
+                        <!-- login -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="login.html"> <i class="fas fa-user-alt text-gray"></i>Login</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contact SECTION-->
+
+
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- form login -->
+            <form class="text-center border border-light p-5 m-auto" action="#!">
+
+                <h4 class="h4 mb-4">Sign in</h4>
+
+                <!-- Email -->
+                <input type="email" class="form-control mb-4" placeholder="E-mail">
+
+                <!-- Password -->
+                <input type="password" class="form-control mb-4" placeholder="Password">
+
+                <div class="d-flex justify-content-around">
+                    <div>
+                        <!-- Remember me -->
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="formRemember">
+                            <label class="custom-control-label" for="formRemember">Remember me</label>
+                        </div>
+                        <p class="my-1">
+                            <!-- Forgot password -->
+                            <a href="forgot.html">Forgot password?</a>
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- Sign in button -->
+                <button class="btn btn-dark btn-block my-4" type="submit">Sign in</button>
+
+                <!-- Register -->
+                <p>Not a member?
+                    <a href="register.html">Register</a>
+                </p>
+
+
+            </form>
+            <!-- Default form login -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white">
+        <!-- container -->
+        <div class="container py-4">
+            <!-- row -->
+            <div class="row py-5">
+                <!-- 3 columns -->
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h6 class="text-uppercase">Customer services</h6>
+                    <ul class="list-unstyled">
+                        <li><a class="footer-link" href="#">Help &amp; Contact Us</a></li>
+                        <li><a class="footer-link" href="#">Returns &amp; Refunds</a></li>
+                        <li><a class="footer-link" href="#">Online Stores</a></li>
+                        <li><a class="footer-link" href="#">Terms &amp; Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h6 class="text-uppercase">Company</h6>
+                    <ul class="list-unstyled">
+                        <li><a class="footer-link" href="#">What We Do</a></li>
+                        <li><a class="footer-link" href="#">Available Services</a></li>
+                        <li><a class="footer-link" href="#">Latest Posts</a></li>
+                        <li><a class="footer-link" href="#">FAQs</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h6 class="text-uppercase">Social media</h6>
+                    <ul class="list-unstyled">
+                        <li><a class="footer-link" href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a class="footer-link" href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                        <li><a class="footer-link" href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        <li><a class="footer-link" href="#"><i class="fab fa-google-plus"></i> Google</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-top pt-4">
+                <!-- 2 columns -->
+                <div class="row">
+                    <div class="col-lg-6">
+                        <p class="small text-muted mb-0">&copy; 2020 All rights reserved.</p>
+                    </div>
+                    <div class="col-lg-6 text-lg-right">
+                        <p class="text-white reset-anchor">Template designed by <a href="#">My Temple</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
