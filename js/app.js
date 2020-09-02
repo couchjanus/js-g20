@@ -3,45 +3,35 @@
 const toggleBtn = document.querySelector(".cart-toggle");
 const closeBtn = document.querySelector(".close-btn");
 const sidebar = document.querySelector(".sidebar");
-
-// function openCart() {
-//     sidebar.style.transform = 'translate(0)';
-// }
-      
-// function closeCart() {
-//     sidebar.style.transform = '';
-// }
-
-// closeBtn.onclick=closeCart;
-// toggleBtn.onclick=openCart;
 // ==============================
-// toggleBtn.addEventListener("click", function () {
-//   // if (sidebar.classList.contains("show-sidebar")) {
-//   //   sidebar.classList.remove("show-sidebar");
-//   // } else {
-//   //   sidebar.classList.add("show-sidebar");
-//   // }
-// });
+(function(){
+    toggleBtn.addEventListener("click", function () {
+        sidebar.classList.toggle("show-sidebar");
+    });
 
-// closeBtn.addEventListener("click", function () {
-//   sidebar.classList.remove("show-sidebar");
-// });
+    closeBtn.addEventListener("click", function () {
+        sidebar.classList.remove("show-sidebar");
+    });
 
-// ==============================
-// toggleBtn.addEventListener("click", function () {
-//   sidebar.classList.toggle("show-sidebar");
-// });
+    // const addToCarts = document.querySelectorAll(".add-to-cart");
+    // console.log(addToCarts); // NodeList
 
-// closeBtn.addEventListener("click", function () {
-//   sidebar.classList.remove("show-sidebar");
-// });
-// ==============================
-// (function(){
-//     toggleBtn.addEventListener("click", function () {
-//         sidebar.classList.toggle("show-sidebar");
-//     });
+    const addToCarts = document.getElementsByClassName("add-to-cart");
+    console.log(addToCarts); // HTMLCollection
+    console.log(addToCarts.length);
 
-//     closeBtn.addEventListener("click", function () {
-//         sidebar.classList.remove("show-sidebar");
-//     });
-// })();
+    // ********** close links ************
+    const navToggle = document.querySelector(".nav-toggle");
+    const linksContainer = document.querySelector(".links-container");
+    const links = document.querySelector(".links");
+
+    navToggle.addEventListener("click", function () {
+        const linksHeight = links.getBoundingClientRect().height;
+        const containerHeight = linksContainer.getBoundingClientRect().height;
+        if (containerHeight === 0) {
+            linksContainer.style.height = `${linksHeight}px`;
+        } else {
+            linksContainer.style.height = 0;
+        }
+    });
+})();
