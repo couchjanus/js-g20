@@ -1,310 +1,139 @@
 'use strict';
 
-console.log(typeof []); // "object"
+// Метод createElement создает элемент html, тег которого передается в качестве параметра. 
 
-// Узнать является ли объект массивом можно следующим образом:
-console.log(Object.prototype.toString.call([]) === '[object Array]'); // true
+let col = document.createElement("div");
+const p = document.createElement("p");
+const product = document.createElement('div');
+let anchor = document.createElement("a");
 
-// Узнать является ли значение переменной массивом можно с помощью специального метода Array.isArray():
-console.log(Array.isArray([])); // true
+// createTextNode(text): создает и возвращает текстовый узел. 
+let anchorText = document.createTextNode("Joemalone Women prefume");
+// можем воспользоваться свойством textContent:
+p.textContent = "$25";
 
-// Создание нового массива:
-var arr = new Array(); // Создали новый пустой массив []
-// Создание массивов с помощью литерала массива.
-let empty = []; // пустой массив
+// Метод appendChild добавляет элемент в конец списка дочерних элементов родителя. 
+// Если элемент уже существует он удаляется из текущего родителя и вставляется заново.
+//  <h6><a class="reset-anchor" href="detail.html">Joemalone Women prefume</a></h6>
+anchor.appendChild(anchorText);
 
-let numbers = [3, -5, 9, 1, 21]; // массив, состоящий из чисел
+// <h6> <a class="reset-anchor" href="detail.html">Joemalone Women prefume</a></h6>
+anchor.href = "detail.html";
+product.className = "product";
 
-//   При создании массивов можно вставлять в конец необязательную завершающую запятую:
-let coffee = [
-    'Lavazza',
-    'Nescafe',
-    'Jardin',
-];
-  
-// Элементы в массиве не обязательно должны иметь одинаковый тип данных.
-let customArr = [6, true, 'Строка']; // массив, содержащий различные типы данных
-  
-// Свойство массивов length взаимосвязано с числом свойств.
-console.log(customArr.length); // 3
+// 
+product.appendChild(p);
+// 
+col.appendChild(product);
 
-// При работе с массивом может возникнуть ситуация, что элемент массива, к которому вы обратитесь, будет пустым и вернёт undefined. 
-let arrWithUndefined = [1,3,5,,,,7];
-console.log(arrWithUndefined.length);  
+const row = document.querySelector('.row');
+row.appendChild(col);
 
-// Обращение к определённому элементу массива выполняется через квадратные скобки по его индексу. Это действие ещё называют операцией индексации.
+// Метод parent.insertBefore(узел, место вставки)
+// узел - Ссылка на вставляемый узел.
+// место вставки - Ссылка на элемент, перед которым необходимо вставить новый узел. Если аргумент равен null, то узел вставляется в конец родителя (то есть сработает, как appendChild()).
+// Данный метод позволяет вставить элемент в любое место, а не только в конец родителя.
 
-// создадим массив, состоящий из 3 элементов
-let smartphoneColors = ["Black", "White", "Grey"];
-// выведем в консоль браузера значения элементов массива smartphoneColors с индексами 0 и 2
-console.log("Значение элемента массива smartphoneColors с индексом 0: " + smartphoneColors[0]); 
-console.log("Значение элемента массива smartphoneColors с индексом 2: " + smartphoneColors[2]);
+const h6 = document.createElement("h6");
+h6.appendChild(anchor);
 
-// изменим значение элемента массива smartphoneColors с индексом 1 на "Red"
-smartphoneColors[1] = "Red"; // ["Black", "Red", "Grey"]
-// установим элементу массива smartphoneColors с индексом 3 значение "Blue"
-smartphoneColors[3] = "Blue"; // ["Black", "Red", "Grey", "Blue"]
-  
-// В качестве значений элементов массива можно использовать не только статические значения, но и выражения:
-  
-let lengthA = 7, widthA = 5;
-let point = [lengthA *2, widthA + 4, -2];
+// parent
+let parent = document.querySelector('.product');
+// console.log(parent);
 
-console.log(point);
+// Вставка в самое начало родителя, то есть перед первым узлом
+parent.insertBefore(h6, parent.firstChild);
 
-// В качестве значений элементов массива могут использоваться объекты.
-  
-let points = [
-    {x1: 5, y1: 3},
-    {x1: 7, y1: 10},
-    {x1: 12, y1: 0}
-]; // массив, состоящий из 3 объектов
-console.log(points);
-  
-// при копировании значения переменной, содержащей массив, мы на самом деле присваиваем ей не сам массив, а ссылку на него.
-  
-let names = ['Cat','Dod'];
-// скопируем в newNames массив names (в результате эти две переменные будут содержать ссылку на один и тот же массив)
-let newNames = names;
-console.log( names === newNames ); // true
-// добавим в массив новый элемент 'Rat'
-newNames[2]='Rat';
-console.log(names); // в массиве names теперь уже три элемента
-        
-// Встроенные методы для работы с массивом автоматически обновляют его длину length.
-// Длина length – не количество элементов массива, а последний индекс + 1.
-var arrLength = [];
-arrLength[1000] = true;
-console.log(arrLength[1000]);
-console.log(arrLength.length); 
-console.log(arrLength[3]); // undefined
+const positionRelative = document.createElement("div");
 
-// При уменьшении length массив укорачивается. Причем этот процесс необратимый, т.е. даже если потом вернуть length обратно – значения не восстановятся:
-        
-arrLength.length = 2; // укоротить до 2 элементов
-console.log(arrLength[3]);
-arrLength.length = 1000; // вернуть length обратно, как было
-console.log(arrLength[1000]); // undefined: значения не вернулись                                    
+const productOverlay = document.createElement("div");
 
-// Удаление элементов массива
-// в javascript удалить элемент массива можно при помощи оператора delete:
+const ul = document.createElement("ul");
+ul.className = "mb-0 list-inline";
 
-let myColors = new Array("red", "green", "blue");
-delete myColors[1];
-console.log(myColors); // red,,blue
-console.log(1 + " элемент массива = " + myColors[1]);
+let li = document.createElement("li");
+li.className="list-inline-item m-0 p-0";
 
-// Самый простой способ очистить массив - это arr.length=0.
+let a = document.createElement("a");
+a.className = "btn btn-sm btn-dark add-to-cart";
+a.href = "#";
+a.textContent = "Add to cart";
+
+li.appendChild(a);
+// ul.appendChild(li);
+// Вставка в конец родителя, аналогично appendChild()
+ul.insertBefore(li, null);
+
+productOverlay.appendChild(ul);
+positionRelative.appendChild(productOverlay);
+
+parent.insertBefore(positionRelative, parent.firstChild);
+
+// Вставка перед конкретным элементом parentChild
+let parentChild = document.querySelector('.list-inline li');
+let liElement = document.createElement('li');
+liElement.innerHTML = '<a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i> Like</a>';
+ul.insertBefore(liElement, parentChild);
+// Вставка после конкретного элемента parentChild
+ul.insertBefore(liElement, parentChild.nextSibling);
+
+// Добавить новый узел в документ можно простой вставкой HTML-кода в виде строки. Для этого используется метод insertAdjacentHTML().
+// parent.insertAdjacentHTML(место вставки, HTML-код)
+// место вставки - Позиция, куда необходимо вставить код. Это место указывается относительно самого элемента и может иметь одно из следующих значений:
+// beforebegin - непосредственно перед открывающим тегом.
+// afterbegin - сразу после открывающего тега.
+// beforeend - непосредственно перед закрывающим тегом.
+// afterend - сразу после закрывающего тега.
+
+ul.insertAdjacentHTML('beforeend', '<li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="fas fa-expand"></i>View</a></li>');
 
 
-// for ([начало]; [условие]; [шаг]) выражения
-
-// for (var i = 0; i<10;i++){
-//   console.log(i);
-// }
-
-
-// do выражения while (условие);
-// цикл do выполнится минимум 1 раз и запускается снова, пока i меньше 5.
-
-// do {
-//   i += 1;
-//   console.log(i);
-// } while (i < 5);
-
-// while (условие)  выражения
-// Следующий цикл while работает, пока n меньше трёх:
-
-// var n = 0;
-// var y = 0;
-// while (n < 3) {
-//   n++;
-//   y += n;
-// }
-
-// Метка -  идентификатор, позволяет  ссылаться на какое-то место в программе. 
-
-// var x = 0;
-// var z = 0
-// labelCancelLoops: while (true) {
-//   console.log("Внешний цикл: " + x);
-//   x += 1;
-//   z = 1;
-//   while (true) {
-//     console.log("Внутренний цикл: " + z);
-//     z += 1;
-//     if (z === 10 && x === 10) {
-//       break labelCancelLoops;
-//     } else if (z === 10) {
-//       break;
-//     }
-//   }
-// }
-
-// цикл while с оператором continue, который срабатывает, когда значение i равно 3. Таким образом, n получает значения 1, 3, 7 и 12.
-
-// var i = 0;
-// var n = 0;
-// while (i < 5) {
-//   i++;
-//   if (i == 3) {
-//     continue;
-//   }
-//   n += i;
-// }
-
-// Если у continue проставлена метка checkiandj, программа может продолжиться с начала метки checkiandj.
-
-// checkiandj:
-//   while (i < 4) {
-//     console.log(i);
-//     i += 1;
-//     checkj:
-//       while (j > 4) {
-//         console.log(j);
-//         j -= 1;
-//         if ((j % 2) != 0) {
-//           continue checkj;
-//         }
-//         console.log(j + " чётное.");
-//       }
-//       console.log("i = " + i);
-//       console.log("j = " + j);
-// }
+// Метод replaceChild() удаляет один узел и вставляет на его место новый.
+// parent.replaceChild(новый узел, старый узел)
+// новый узел - Ссылка на вставляемый узел.
+// старый узел - Ссылка на удаляемый узел.
 
 
-// перебор элементов массива addToCarts:
-let addToCarts = document.getElementsByClassName('add-to-cart');
-console.log(addToCarts.length);
+let li1 = document.querySelector('li.list-inline-item'); // ссылка на 1 существующий элемент
+console.log(li1);
 
-// for (let i = 0; i < addToCarts.length; i++) {
-//       console.log(addToCarts[i]);
-// }
+let li2 = li1.nextSibling; // ссылка на 2 существующий элемент
+console.log(li2);
 
-// for (let i=0; i<addToCarts.length; i++ ){
-//    addToCarts[i].addEventListener('click', function () {
-//        console.log('click');
-//    });
-// }
+// Метод возвращает ссылку на удаленный узел.
+let replaceLi = ul.replaceChild(li1, li2); // заменяем элемент li1 на li2
 
-// Для перебора всех свойств из объекта используется цикл по свойствам for..in. 
+ul.insertBefore(replaceLi, li1);
 
-// for (var key in addToCarts) {
-//   // код будет вызван для каждого свойства объекта и выведет имя свойства и его значение
-//   console.log( "Ключ: " + key + " значение: " + addToCarts[key] );
-// }
+// <script id="template-item" type="text/template">
+// </script>
 
-// если имя свойства хранится в переменной, то обратиться к нему можно только так, не через точку.
+// Браузер содержимое тега <script> считает простым текстом, а так как в атрибуте type у него указан неизвестный ему MIME-тип, то интерпретировать или отображать он его не станет. 
+// Содержимое тега script можно получить после загрузки документа, обратившись к нему по id.
 
-// for (var key in addToCarts[0]) {
-//     // код будет вызван для каждого свойства объекта и выведет имя свойства и его значение
-//     console.log( "Ключ: " + key + " значение: " + addToCarts[0][key] );
-// }
 
-// в консоли можно будет увидеть все свойства DOM-объекта
-// console.dir(addToCarts[0]);
+let templateSource = document.getElementById("template-item").innerHTML;      
 
-// addToCarts[0].addEventListener('click', function (e) {
-//     console.dir(e);
+const section = document.createElement("section");
+section.classList = "text-center border border-light p-5 my-3";
+
+section.innerHTML = templateSource;
+document.querySelector('.container').appendChild(section);
+
+
+let content = document.getElementById("cartItem").content;  
+// document.querySelector('.cart-items').appendChild(content);
+
+// Для использования template его необходимо активировать. 
+
+let addToCart = document.getElementById('addToCart');
+
+addToCart.addEventListener('click', function(){
+    document.querySelector('.cart-items').appendChild(content);
+});
+
+// Самый простой способ активации заключается в создании deep copy свойства .content с использованием метода  document.importNode().  Свойство .content является read-only.
+
+// addToCart.addEventListener('click', function(){
+//     document.querySelector('.cart-items').append(document.importNode(content, true));
 // });
-
-// let theTarget = event.target - Ссылка на объект, который отправил событие. 
-// Свойство event.target может быть использовано для реализации делегирования событий.
-// for (let i=0; i<addToCarts.length; i++ ){
-//    addToCarts[i].addEventListener('click', function (e) {
-//        // console.log(e);
-//        console.log(e.target);
-//    });
-// }
-
-// for (let i=0; i<addToCarts.length; i++ ){
-//     addToCarts[i].addEventListener('click', function (e) {
-//         e.target.style.display = 'none';
-//     });
-// }
-
-// Свойство parentNode - указывает на родительский узел элемента или null для узлов, не имеющих родителя, таких как Document.
-
-// for (let i=0; i<addToCarts.length; i++ ){
-//    addToCarts[i].addEventListener('click', function (e) {
-//        console.log(e.target.parentNode);
-//    });
-// }
-
-// for (let i=0; i<addToCarts.length; i++ ){
-//   addToCarts[i].addEventListener('click', function (e) {
-//       console.log(e.target.parentNode.parentNode.parentNode.parentNode);
-//   });
-// }
-
-// Свойство childNodes - доступный для чтения объект, обеспечивающий представление дочерних узлов.
-// for (let i=0; i<addToCarts.length; i++ ){
-//    addToCarts[i].addEventListener('click', function (e) {
-//        console.log(e.target.parentNode.parentNode.parentNode.parentNode.childNodes);
-//    });
-// }
-// Каждый узел в свою очередь, кроме текстовых и комментариев, имеет свои наборы узлов, так например маркированный список ul состоит из текстовых узлов и элементов li. В целом и получается, что дерево DOM состоит из множества таких узлов, если представлять DOM в виде объекта Node.
-// Свойство Node.childElementCount предназначено только для чтения и возвращает число дочерних элементов узла.
-
-// for (let i=0; i<addToCarts.length; i++ ){
-//    addToCarts[i].addEventListener('click', function (e) {
-//        console.log(e.target.parentNode.parentNode.parentNode.parentNode.childNodes);
-//        console.log(e.target.parentNode.parentNode.parentNode.parentNode.childElementCount);
-//    });
-// }
-
-// Свойство Node.children возвращает коллекцию (HTMLCollection) дочерних элементов узла.
-// Если у узла детей нет, она будет пустой. Определить это можно, обратившись к свойству length, которое содержит в себе количество элементов в коллекции.
-
-// for (let i=0; i<addToCarts.length; i++ ) {
-//     addToCarts[i].addEventListener('click', function (e) {
-//         let y = 180;
-//         console.log(e.target.parentNode.parentNode.parentNode.parentNode.children[0].children[0]);
-//         e.target.parentNode.parentNode.parentNode.parentNode.children[0].children[0].style.transform = 'rotateY(180deg)';
-//     });
-// }
-
-//  Первый и последний дочерние узлы или null, если данный узел не имеет дочерних узлов.
-//  firstChild - первый дочерний узел элемента,
-//  lastChild - последний дочерний узел.
- //  console.log(e.target.parentNode.parentNode.parentNode.parentNode.firstChild);
-//  console.log(e.target.parentNode.parentNode.parentNode.parentNode.lastChild);
- 
- 
-//  Братскими называются два узла, имеющие одного и того же родителя. Порядок их следования соответствует порядку следования в документе. Эти свойства связывают узлы в двусвязный список.
-//  previousSibling - узел до элемента.
-//  console.log(e.target.parentNode.parentNode.parentNode.parentNode.lastChild.previousSibling);
- 
-//  Свойства nextSibling - узел после элемента,
-//  console.log(e.target.parentNode.parentNode.parentNode.parentNode.firstChild.nextSibling);
-
-// свойство firstElementChild Доступное только для чтения
-// свойство ParentNode.firstElementChild возвращает первый дочерний элемент объекта (Element) или null если дочерних элементов нет.
-
-// for (let i=0; i<addToCarts.length; i++ ) {
-//     addToCarts[i].addEventListener('click', function (e) {
-//         let y = 180;
-//         console.log(e.target.parentNode.parentNode.parentNode.parentNode.firstElementChild.firstElementChild);
-//         e.target.parentNode.parentNode.parentNode.parentNode.firstElementChild.firstElementChild.style.transform = 'rotateY(180deg)';
-//     });
-// }
-
-// Свойство ParentNode.lastElementChild только для чтения. Возвращает последний дочерний элемент объекта или null если нет дочерних элементов.
-
-// console.log(e.target.parentNode.parentNode.parentNode.parentNode.lastElementChild);
-// for (let i=0; i<addToCarts.length; i++ ) {
-//     addToCarts[i].addEventListener('click', function (e) {
-//         let y = 180;
-//         console.log(e.target.parentNode.parentNode.parentNode.parentNode.firstElementChild.lastElementChild);
-//         e.target.parentNode.parentNode.parentNode.parentNode.firstElementChild.lastElementChild.style.transform = 'rotateY(180deg)';
-//     });
-// }
-
-// Метод Element.closest() возвращает ближайший родительский элемент (или сам элемент), который соответствует заданному CSS-селектору или null, если элементов нет.
-
-// for (let i=0; i<addToCarts.length; i++ ){
-//     addToCarts[i].addEventListener('click', function (e) {
-//         e.target.closest(".position-relative").firstElementChild.lastElementChild.style.transform = 'rotateY(180deg)';
-//     });
-// }
-

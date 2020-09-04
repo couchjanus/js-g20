@@ -318,7 +318,9 @@ button.bg-light:focus {
     text-decoration: none;
 }
 
-
+.text-right{
+    text-align: right;
+}
 /* float */
 
 .float-left {
