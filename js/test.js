@@ -151,11 +151,46 @@ console.log(makeProduct.renderProduct());
      `
     }
 
-    document.querySelector('.row').innerHTML = createMarkup(data);
+    // document.querySelector('.row').innerHTML = createMarkup(data);
     
-    let res = '';
-    products.forEach(function(item) {
-        res+=createMarkup(item);
-    });
-    document.querySelector('.row').innerHTML = res;
+    // let res = '';
+    // products.forEach(function(item) {
+    //     res+=createMarkup(item);
+    // });
+    // document.querySelector('.row').innerHTML = res;
+
     
+    function socIcon(className, icon, capture='') { 
+        return `<li class="list-inline-item m-0 p-0 ${className}"><a class="btn btn-sm btn-outline-dark"
+        href="#"><i class="far ${icon}"></i> ${capture}</a></li>
+       `; 
+    }
+    // let icon = 'fa-heart';
+    // console.log(`Something is ${socIcon('fa-heart')}.`);
+
+    function createNewMarkup(data) {
+        return `
+        <div class="col-xl-3 col-lg-4 col-sm-6">
+               <div class="product text-center">
+                   <div class="position-relative mb-3">
+                       <a class="d-block" href="detail.html">
+                           <img class="img-fluid w-100 product-img" src="${data.image}" alt="...">
+                           </a>
+                       <div class="product-overlay">
+                           <ul class="mb-0 list-inline">
+                           ${socIcon('like-this','fa-heart', )}
+                           ${socIcon('add-to-cart','fa-shopping-cart', 'Add to cart')}
+                           ${socIcon('view-this','fa-expand')}
+                           </ul>
+                       </div>
+                   </div>
+                   <h6> <a class="reset-anchor product-name" href="detail.html">${data.name}</a></h6>
+                   <p class="small text-muted product-price">${data.price}</p>
+               </div>
+           </div>
+        `
+       }
+   
+    document.querySelector('.row').innerHTML = createNewMarkup(data);
+
+       
