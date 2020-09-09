@@ -4,136 +4,202 @@ const toggleBtn = document.querySelector(".cart-toggle");
 const closeBtn = document.querySelector(".close-btn");
 const sidebar = document.querySelector(".sidebar");
 
-function addProductToCart(content, item) {
-    content.querySelector('.cart-item').setAttribute('id', item.getAttribute('data-id'));
-    content.querySelector('.product-name').textContent = item.querySelector(".product-name").textContent;
-    content.querySelector('.product-price').textContent = item.querySelector(".product-price").textContent;
-    content.querySelector('.product-price').setAttribute('data-price', item.querySelector(".product-price").textContent);
-    content.querySelector('.product-img img').setAttribute('src',item.querySelector(".product-img").getAttribute('src'));
-    return content;
+let cart = [];
+const cartItems = document.querySelector(".cart-items");
+const clearCart = document.querySelector(".clear-cart");
+
+const overlayGroup = [
+    {
+        liClass:'list-inline-item m-0 p-0 like-this',
+        aClass:'btn btn-sm btn-outline-dark',
+        icon:'fas fa-heart',
+        capture:''
+    },
+    {
+        liClass:'list-inline-item m-0 p-0 add-to-cart',
+        aClass:'btn btn-sm btn-outline-dark',
+        icon:'fas fa-dolly-flatbed',
+        capture:'Add to cart'
+    },
+    {
+        liClass:'list-inline-item m-0 p-0 view-this',
+        aClass:'btn btn-sm btn-outline-dark',
+        icon:'fas fa-expand',
+        capture:''
+    },
+];
+
+const socialGroup = [
+    {
+        liClass:'',
+        aClass:'footer-link twitter',
+        icon:'fab fa-twitter',
+        capture:'Twitter'
+    },
+    {
+        liClass:'',
+        aClass:'footer-link facebook',
+        icon:'fab fa-facebook',
+        capture:'Facebook'
+    },
+    {
+        liClass:'',
+        aClass:'footer-link finstagram',
+        icon:'fab fa-instagram',
+        capture:'Instagram'
+    },
+    {
+        liClass:'',
+        aClass:'footer-link google-plus',
+        icon:'fab fa-google-plus',
+        capture:'Google'
+    },
+];
+
+let makeLiGroup = (group, ulClass, header='') => {
+    let lis = '';
+    group.forEach(function(item){
+        lis+=`<li class="${item.liClass}">
+            <a class="${item.aClass}" href="#">
+                <i class="${item.icon}"></i> ${item.capture}
+            </a>
+        </li>`; 
+    });
+
+    return `
+        ${header}
+        <ul class="${ulClass}">
+            ${lis}
+        </ul>`;
+}
+
+function createProductMarkup(data) {
+    return `
+    <div class="col-xl-3 col-lg-4 col-sm-6">
+           <div class="product text-center" data-id="${data.id}">
+               <div class="position-relative mb-3">
+                   <a class="d-block" href="detail.html">
+                       <img class="img-fluid w-100 product-img" src="${data.image}" alt="...">
+                    </a>
+                    <div class="product-overlay">${makeLiGroup(overlayGroup, 'mb-0 list-inline')}</div>
+               </div>
+               <h6><a class="reset-anchor product-name" href="detail.html">${data.name}</a></h6>
+               <p class="small text-muted product-price" data-price="${data.price}">${data.price}</p>
+           </div>
+       </div>
+    `
+} 
+
+// ${productOverlay()}
+
+// let faIcon = (liClassName, aClassName,icon, capture='') => 
+//     `<li class="${liClassName}">
+//         <a class="${aClassName}" href="#">
+//             <i class="${icon}"></i> ${capture}
+//         </a>
+//     </li>`; 
+
+// let productOverlay = () => `
+//     <div class="product-overlay">
+//         <ul class="mb-0 list-inline">
+//         ${faIcon('list-inline-item m-0 p-0 like-this','btn btn-sm btn-outline-dark','fas fa-heart', )}
+//         ${faIcon('list-inline-item m-0 p-0 add-to-cart','btn btn-sm btn-outline-dark','fas fa-dolly-flatbed', 'Add to cart')}
+//         ${faIcon('list-inline-item m-0 p-0 view-this','btn btn-sm btn-outline-dark','fas fa-expand')}
+//         </ul>
+//     </div>
+// `;
+
+function addCartItem(item) {
+    const div = document.createElement("div");
+    div.classList.add("cart-item");
+    div.setAttribute('id', item.id);
+    div.innerHTML = `<!-- cart item -->
+        <div class="picture product-img">
+            <img src="${item.image}" alt="${item.name}" class="img-fluid w-100">
+        </div>
+        <div class="product-name p-auto">${item.name}</div>
+        <div class="remove-btn text-right">
+            <a class="reset-anchor m-auto" href="#">
+                <i class="fas fa-trash-alt" data-id=${item.id}></i>
+            </a>
+        </div>
+        <div class="quantity">
+            <div class="border d-flex justify-content-around mx-auto">
+                <i class="fas fa-caret-left inc-dec-btn" data-id=${item.id}></i>
+                <span class="border-1 p-1 amount">${item.amount}</span>
+                <i class="fas fa-caret-right inc-dec-btn" data-id=${item.id}></i>
+            </div>
+        </div>
+        <div class="price">
+            $<span class="product-price">${item.price}</span>
+        </div>
+    `;
+    cartItems.appendChild(div);
+}
+
+function saveCart(cart){
+    console.log(cart);
+}
+
+function getProduct(id) {
+    return products.find(product => product.id === +(id));
+}
+
+function addToCarts() {
+    const addToCartButtons = [...document.querySelectorAll(".add-to-cart")];
+    addToCartButtons.forEach(button => {
+        button.addEventListener("click", event => {
+          // add to cart
+          let cartItem = { ...getProduct(event.target.closest('.product').getAttribute('data-id')), amount: 1 };
+          cart = [...cart, cartItem];
+          // add to DOM
+          addCartItem(cartItem);
+        });
+    });
+}
+
+function clear() {
+    cart = [];
+    while (cartItems.children.length > 0) {
+        cartItems.removeChild(cartItems.children[0]);
+    }
+}
+
+const filterItem = (cart, curentItem) => cart.filter(item => item.id !== +(curentItem.dataset.id));
+
+const findItem = (cart, curentItem) => cart.find(item => item.id === +(curentItem.dataset.id));
+
+function renderCart() {
+
+    clearCart.addEventListener("click", () => {
+      clear();
+    });
     
-}
-function createMarkup(data) {
-    return `
-    <div class="col-xl-3 col-lg-4 col-sm-6">
-           <div class="product text-center" data-id="${data.id}">
-               <div class="position-relative mb-3">
-                   <a class="d-block" href="detail.html">
-                       <img class="img-fluid w-100 product-img" src="${data.image}" alt="...">
-                       </a>
-                   <div class="product-overlay">
-                       <ul class="mb-0 list-inline">
-                           <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark"
-                                   href="#"><i class="far fa-heart"></i></a></li>
-                           <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark add-to-cart"
-                                   href="#">Add to cart</a></li>
-                           <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark" href="#"><i
-                                       class="fas fa-expand"></i></a>
-                           </li>
-                       </ul>
-                   </div>
-               </div>
-               <h6> <a class="reset-anchor product-name" href="detail.html">${data.name}</a></h6>
-               <p class="small text-muted product-price" data-price="${data.price}">${data.price}</p>
-           </div>
-       </div>
-    `
-   } 
-
-function socIcon(className, icon, capture='') { 
-    return `<li class="list-inline-item m-0 p-0 ${className}"><a class="btn btn-sm btn-outline-dark"
-    href="#"><i class="fas ${icon}"></i> ${capture}</a></li>
-   `; 
-}
-
-function createNewMarkup(data) {
-    return `
-    <div class="col-xl-3 col-lg-4 col-sm-6">
-           <div class="product text-center" data-id="${data.id}">
-               <div class="position-relative mb-3">
-                   <a class="d-block" href="detail.html">
-                       <img class="img-fluid w-100 product-img" src="${data.image}" alt="...">
-                       </a>
-                   <div class="product-overlay">
-                       <ul class="mb-0 list-inline">
-                       ${socIcon('like-this','fa-heart', )}
-                       ${socIcon('add-to-cart','fa-dolly-flatbed', 'Add to cart')}
-                       ${socIcon('view-this','fa-expand')}
-                       </ul>
-                   </div>
-               </div>
-               <h6> <a class="reset-anchor product-name" href="detail.html">${data.name}</a></h6>
-               <p class="small text-muted product-price" data-price="${data.price}">${data.price}</p>
-           </div>
-       </div>
-    `
-   } 
-// footer-socials
-function footerSocials(className, icon, capture='') { 
-    return `
-    <li><a class="footer-link  ${className}" href="#"><i class="fab ${icon}"></i> ${capture}</a></li>
-   `; 
-}
+    cartItems.addEventListener("click", event => {
+      if (event.target.classList.contains("fa-trash-alt")) {
+        cart = filterItem(cart, event.target);
+        cartItems.removeChild(event.target.parentElement.parentElement.parentElement);
+      } else if (event.target.classList.contains("fa-caret-right")) {
+        let tempItem = findItem(cart, event.target);
+        tempItem.amount = tempItem.amount + 1;
+        event.target.previousElementSibling.innerText = tempItem.amount;
+      } else if (event.target.classList.contains("fa-caret-left")) {
+        let tempItem = findItem(cart, event.target);
+        tempItem.amount = tempItem.amount - 1;
+        if (tempItem.amount > 0) {
+        event.target.nextElementSibling.innerText = tempItem.amount;
+        } else {
+          cart = filterItem(cart, event.target);
+          cartItems.removeChild(event.target.parentElement.parentElement.parentElement);
+        }
+      }
+    });
+  }
 
 // ==============================
 (function(){
     toggleBtn.addEventListener("click", function () {
         sidebar.classList.toggle("show-sidebar");
-        console.log(document.querySelectorAll('.cart-item').length);
-
-        let itemsInCart = document.querySelectorAll('.cart-item');
-
-        for (item of itemsInCart) {
-            // console.log(item);
-        
-            const price = item.querySelector('.product-price').getAttribute('data-price');
-
-            item.querySelector('button.dec-btn').addEventListener('click', function(e){
-                console.log(e.target.parentNode.nextElementSibling);
-                let val = e.target.parentNode.nextElementSibling.textContent;
-                if(+(val) > 1) {
-                    val--;
-                    console.log('val-- :', val);
-                    e.target.parentNode.nextElementSibling.textContent = val;
-                    e.target.closest('.quantity').nextElementSibling.querySelector('.product-price').textContent=val*price;
-                }
-            });
-
-            item.querySelector('button.inc-btn').addEventListener('click', function(e){
-                console.log(e.target.parentNode.previousElementSibling);
-                let val = e.target.parentNode.previousElementSibling.textContent;
-                // e.target.parentNode.previousElementSibling.value = +(val)+1;
-                +(val)++;
-                console.log('val++ :', val);
-                e.target.parentNode.previousElementSibling.textContent = val;
-                e.target.closest('.quantity').nextElementSibling.querySelector('.product-price').textContent=val*price;
-            });
-        };
-
-        // for(let i=0; i<itemsInCart.length;i++){
-        //     const price = itemsInCart[i].querySelector('.product-price').getAttribute('data-price');
-
-        //     itemsInCart[i].querySelector('.quantity button.dec-btn').addEventListener('click', function(e){
-        //         // console.log(e.target.parentNode.nextElementSibling);
-        //         let val = e.target.parentNode.nextElementSibling.textContent;
-        //         if(+(val) > 1) {
-        //             val--;
-        //             console.log('val-- :', val);
-        //             e.target.parentNode.nextElementSibling.textContent = val;
-        //             e.target.closest('.quantity').nextElementSibling.querySelector('.product-price').textContent=val*price;
-        //         }
-        //     });
-
-        //     itemsInCart[i].querySelector('.quantity button.inc-btn').addEventListener('click', function(e){
-        //         // console.log(e.target.parentNode.previousElementSibling);
-        //         let val = e.target.parentNode.previousElementSibling.textContent;
-        //         // e.target.parentNode.previousElementSibling.value = +(val)+1;
-        //         +(val)++;
-        //         console.log('val++ :', val);
-        //         e.target.parentNode.previousElementSibling.textContent = val;
-        //         e.target.closest('.quantity').nextElementSibling.querySelector('.product-price').textContent=val*price;
-        //     });
-        // }
     });
 
     closeBtn.addEventListener("click", function () {
@@ -142,17 +208,12 @@ function footerSocials(className, icon, capture='') {
 
     let result = '';
     products.forEach(function(item) {
-        // result+=createMarkup(item);
-        result+=createNewMarkup(item);
+        result+=createProductMarkup(item);
     });
     document.querySelector('.showcase').innerHTML = result;
-    document.querySelector('.footer-socials').innerHTML = 
-    `${footerSocials('twitter','fa-twitter', 'Twitter')}
-    ${footerSocials('facebook','fa-facebook', 'Facebook')}
-    ${footerSocials('finstagram','fa-instagram', 'Instagram')}
-    ${footerSocials('google-plus','fa-google-plus', 'Google')}`;
+    
+    document.querySelector('footer div.row').lastElementChild.innerHTML=makeLiGroup(socialGroup, 'list-unstyled footer-socials social-icon', '<h6 class="text-uppercase">Social media</h6>');  
 
-    // ********** close links ************
     const navToggle = document.querySelector(".nav-toggle");
     const linksContainer = document.querySelector(".links-container");
     const links = document.querySelector(".links");
@@ -167,20 +228,6 @@ function footerSocials(className, icon, capture='') {
         }
     });
 
-    let content = document.getElementById("cartItem").content;  
-    const addToCarts = document.getElementsByClassName("add-to-cart");
-
-    const template = document.getElementById("cartItem").content;  
-    for (let i=0; i<addToCarts.length; i++) {
-        addToCarts[i].addEventListener('click', function(e){
-            let item = e.target.closest('.product');
-            let content = addProductToCart(template, item);
-            document.querySelector('.cart-items').append(document.importNode(content, true));
-            
-            let q = document.querySelector('.cart-toggle small').textContent;
-            q++;
-            document.querySelector('.cart-toggle small').textContent=q;
-            
-        })
-    }
+    addToCarts();
+    renderCart();
 })();

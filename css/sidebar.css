@@ -63,6 +63,9 @@
   margin-right: 2rem;
 }
 
+.inc-dec-btn, .amount{
+  padding: 0.5rem 1rem;
+}
 @media screen and (min-width: 676px) {
     .sidebar {
       width: 400px;
