@@ -1,60 +1,38 @@
 'use strict';
-// app.js 
 
-// const toggleBtn = document.querySelector(".cart-toggle");
-// const closeBtn = document.querySelector(".close-btn");
 const sidebar = document.querySelector(".sidebar");
 const cartItems = document.querySelector(".cart-items");
 const clearCart = document.querySelector(".clear-cart");
 
-const overlayGroup = [
-    {
-        liClass:'list-inline-item m-0 p-0 like-this',
-        aClass:'btn btn-sm btn-outline-dark',
-        icon:'fas fa-heart',
-        capture:''
-    },
-    {
-        liClass:'list-inline-item m-0 p-0 add-to-cart',
-        aClass:'btn btn-sm btn-outline-dark',
-        icon:'fas fa-dolly-flatbed',
-        capture:'Add to cart'
-    },
-    {
-        liClass:'list-inline-item m-0 p-0 view-this',
-        aClass:'btn btn-sm btn-outline-dark',
-        icon:'fas fa-expand',
-        capture:''
-    },
-];
+class Storage {
+    static saveProducts(products) {
+      localStorage.setItem("products", JSON.stringify(products));
+    }
+    static getProduct(id) {
+      let products = JSON.parse(localStorage.getItem("products"));
+      return products.find(product => product.id === +(id));
+    }
+    static saveCart(cart) {
+      localStorage.setItem("basket", JSON.stringify(cart));
+    }
+    static getCart() {
+      return localStorage.getItem("basket")
+        ? JSON.parse(localStorage.getItem("basket"))
+        : [];
+    }
+}
 
-const socialGroup = [
-    {
-        liClass:'',
-        aClass:'footer-link twitter',
-        icon:'fab fa-twitter',
-        capture:'Twitter'
-    },
-    {
-        liClass:'',
-        aClass:'footer-link facebook',
-        icon:'fab fa-facebook',
-        capture:'Facebook'
-    },
-    {
-        liClass:'',
-        aClass:'footer-link finstagram',
-        icon:'fab fa-instagram',
-        capture:'Instagram'
-    },
-    {
-        liClass:'',
-        aClass:'footer-link google-plus',
-        icon:'fab fa-google-plus',
-        capture:'Google'
-    },
-];
-
+class Product {
+    getProducts() {
+        return products.map(item => {
+                const name = item.name;
+                const price = item.price;
+                const id = item.id;
+                const image = item.image;
+                return { name, price, id, image };
+        });
+    }
+}
 
 class App {
     cart = [];
@@ -66,16 +44,64 @@ class App {
         const toggleBtn = document.querySelector(".cart-toggle");
         const closeBtn = document.querySelector(".close-btn");
 
-        closeBtn.addEventListener("click", () => sidebar.classList.remove("show-sidebar"));
-        toggleBtn.addEventListener("click", () => sidebar.classList.toggle("show-sidebar"));
+        const socialGroup = [
+            {
+                liClass:'',
+                aClass:'footer-link twitter',
+                icon:'fab fa-twitter',
+                capture:'Twitter'
+            },
+            {
+                liClass:'',
+                aClass:'footer-link facebook',
+                icon:'fab fa-facebook',
+                capture:'Facebook'
+            },
+            {
+                liClass:'',
+                aClass:'footer-link finstagram',
+                icon:'fab fa-instagram',
+                capture:'Instagram'
+            },
+            {
+                liClass:'',
+                aClass:'footer-link google-plus',
+                icon:'fab fa-google-plus',
+                capture:'Google'
+            },
+        ];
+
+        // closeBtn.addEventListener("click", () => sidebar.classList.remove("show-sidebar"));
+        closeBtn.addEventListener("click", () => this.closeCart());
+        toggleBtn.addEventListener("click", () => this.openCart());
+        
         this.navbarToggle();
         this.makeShowcase(products);
         document.querySelector('footer div.row').lastElementChild.innerHTML=this.makeLiGroup(socialGroup, 'list-unstyled footer-socials social-icon', '<h6 class="text-uppercase">Social media</h6>');  
+
+        let data = new Product();
+        Storage.saveProducts(data.getProducts());
+        
+        this.cart = Storage.getCart();
     }
-    
     
 
     // methods
+
+    openCart() {
+        document.querySelector(".overlay").classList.add("active");
+        sidebar.classList.toggle("show-sidebar");
+        cartItems.innerHTML='';
+        this.cart = Storage.getCart();
+        this.populateCart(this.cart);
+        this.setCartTotal(this.cart);
+    }
+
+    closeCart() {
+        sidebar.classList.remove("show-sidebar");
+        document.querySelector(".overlay").classList.remove("active");
+    }
+
 
     makeShowcase(products) {
         let result = '';
@@ -119,6 +145,27 @@ class App {
     }
 
     createProductMarkup(data) {
+        const overlayGroup = [
+            {
+                liClass:'list-inline-item m-0 p-0 like-this',
+                aClass:'btn btn-sm btn-outline-dark',
+                icon:'fas fa-heart',
+                capture:''
+            },
+            {
+                liClass:'list-inline-item m-0 p-0 add-to-cart',
+                aClass:'btn btn-sm btn-outline-dark',
+                icon:'fas fa-dolly-flatbed',
+                capture:'Add to cart'
+            },
+            {
+                liClass:'list-inline-item m-0 p-0 view-this',
+                aClass:'btn btn-sm btn-outline-dark',
+                icon:'fas fa-expand',
+                capture:''
+            },
+        ];
+       
         return `
         <div class="col-xl-3 col-lg-4 col-sm-6">
                <div class="product text-center" data-id="${data.id}">
@@ -163,20 +210,28 @@ class App {
         cartItems.appendChild(div);
     }
     
-    saveCart(cart){
-        console.log(cart);
-    }
-    
     getProduct = (id) => products.find(product => product.id === +(id));
         
     addToCarts() {
         const addToCartButtons = [...document.querySelectorAll(".add-to-cart")];
         addToCartButtons.forEach(button => {
             button.addEventListener("click", event => {
-              let cartItem = { ...this.getProduct(event.target.closest('.product').getAttribute('data-id')), amount: 1 };
-              this.cart = [...this.cart, cartItem];
-              this.addCartItem(cartItem);
-              this.setCartTotal(this.cart);
+                let product = this.getProduct(event.target.closest('.product').getAttribute('data-id'));
+
+                let exist = this.cart.some(elem => elem.id === product.id);
+                if(exist){
+                    this.cart.forEach(elem => {
+                        if(elem.id === product.id){
+                          elem.amount += 1;
+                        }
+                    })
+                }else {
+                    let cartItem = { ...product, amount: 1 };
+                    this.cart = [...this.cart, cartItem];
+                    // this.addCartItem(cartItem);
+                }
+                Storage.saveCart(this.cart);
+                this.setCartTotal(this.cart);
             });
         });
     }
@@ -186,6 +241,8 @@ class App {
         while (cartItems.children.length > 0) {
             cartItems.removeChild(cartItems.children[0]);
         }
+        this.setCartTotal(this.cart);
+        Storage.saveCart(this.cart);
     }
 
     filterItem = (cart, curentItem) => cart.filter(item => item.id !== +(curentItem.dataset.id));
@@ -200,11 +257,13 @@ class App {
             if (event.target.classList.contains("fa-trash-alt")) {
                 this.cart = this.filterItem(this.cart, event.target);
                 this.setCartTotal(this.cart);
+                Storage.saveCart(this.cart);
                 cartItems.removeChild(event.target.parentElement.parentElement.parentElement);
             } else if (event.target.classList.contains("fa-caret-right")) {
                 let tempItem = this.findItem(this.cart, event.target);
                 tempItem.amount = tempItem.amount + 1;
                 this.setCartTotal(this.cart);
+                Storage.saveCart(this.cart);
                 event.target.previousElementSibling.innerText = tempItem.amount;
             } else if (event.target.classList.contains("fa-caret-left")) {
                 let tempItem = this.findItem(this.cart, event.target);
@@ -216,6 +275,7 @@ class App {
                 cartItems.removeChild(event.target.parentElement.parentElement.parentElement);
                 }
                 this.setCartTotal(this.cart);
+                Storage.saveCart(this.cart);
             }
         });
     }
@@ -229,6 +289,10 @@ class App {
         });
         this.cartTotal.textContent = parseFloat(tempTotal.toFixed(2));
         this.countItems.textContent = itemsTotal;
+    }
+
+    populateCart(cart) {
+        cart.forEach(item => this.addCartItem(item));
     }
 
 }

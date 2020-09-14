@@ -1,60 +1,105 @@
 'use strict';
 
-// // безымянный
-// var App = class {
-// };
-// console.log(App.name);
-  
-// // именованный
-// var App = class AppClass {
-// };  
-// console.log(App.name);
-  
+if (window.sessionStorage && window.localStorage) {
+  // объекты sessionStorage и localstorage поддерживаются
+  console.log('объекты sessionStorage и localstorage поддерживаются');
+} else {
+  // объекты sessionStorage и localstorage не поддерживаются
+  console.log('объекты sessionStorage и localstorage не поддерживаются');
+}
 
-// class App {
-//     // The body of class
-// }
+try { 
+      localStorage.setItem('ключ', 'значение');
+    } catch (e) {
+      if (e == QUOTA_EXCEEDED_ERR) {
+            console.log('Превышен лимит');  
+      }
+    }      
 
-// const app = new App();
-// // new App() создает экземпляр класса App.
+console.log(localStorage.length);
 
-// class App {
-//     // The body of class
+// LocalStorage имеет всего 5 метода.
+   
+// Получить имя n-ного ключа в Storage
+console.log('Получить имя n-ного ключа в Storage: ', localStorage.key(0));
 
-//     constructor() { 
-//         // constructor
-//     }
-// }
+//  Получить значение ключа.
+console.log('Получить значение ключа в Storage: ', localStorage.getItem('basket'));
+// Получить значение ключа.
+localStorage["Ключ"]
+   
+// Добавление  ключа в Storage или обновление его значение, если ключ уже существовал.
+localStorage.setItem('basket', 'true');
+console.log('Добавление  ключа в Storage или обновление его значение, если ключ уже существовал: ', localStorage.getItem('basket'));
+// Сохранение значения
+localStorage["Ключ"] = "Значение"
+
+// Storage.removeItem(Ключ) Удалит этот ключ из Storage.
+localStorage.removeItem('basket');
+console.log('Удалит этот ключ из Storage: ', localStorage.getItem('basket'));
+
+// При вызове метод Storage.clear() удалит все ключи из Storage.
+localStorage.clear();
+console.log('localStorage.length = ', localStorage.length);
 
 
-// class App {
-//     constructor() { 
-//         const toggleBtn = document.querySelector(".cart-toggle");
-//         const closeBtn = document.querySelector(".close-btn");
-//         this.closeBtn.addEventListener("click", () => sidebar.classList.remove("show-sidebar"));
-//         this.toggleBtn.addEventListener("click", () => sidebar.classList.toggle("show-sidebar"));
-//     }
-// }
+function initStorage() {
+    try {
+        localStorage.getItem("basket") ?
+        localStorage.getItem("basket") :
+        localStorage.setItem("basket", “cart item”);
+    } catch (e) {
+        if (e == QUOTA_EXCEEDED_ERR) {
+            console.log('Превышен лимит localStorage'); 
+        }
+    }
+ }
 
-// class App {
-//     // The body of class
-//     cart = [];
+if (initStorage()) {
+  console.log(typeof localStorage["basket"]);
+}
+
+// Удаление значения
+localStorage.removeItem("Ключ")
+ 
+// Удаление значения
+delete localStorage["Ключ"]
+
+// Очистка всего хранилища
+localStorage.clear()
+localStorage.setItem('myKey', 'myValue');
+
+var localValue = localStorage.getItem('myKey');
+localStorage.removeItem("myKey"); // удаляем
+localStorage.clear() // очищаем все хранилище
+
+// То же самое, только с квадратными скобками:
+localStorage["Ключ"] = "Значение" //установка значения
+localStorage["Ключ"] // Получение значения
+delete localStorage["Ключ"] // Удаление значения
     
-//     // constructor
-//     constructor() { 
-//         // ...
-//     }
-// }
+// Проверка существует ли в массиве какой-нибудь элемент с elem.id = id.
+let id = 1;
 
-// Базовый синтаксис для классов:
+let exist = tmpProducts.some(elem => {
+  return elem.id === id;
+});
 
-// class App {
-//     cart = []; // свойство
-//     // конструктор
-//     constructor() { 
-//         // ...
-//     }
-//     // метод
-//     addToCarts() {
-//     } 
-// }
+if(tmpProducts.length > 0){
+  let exist = tmpProducts.some(elem => {
+    return elem.id === prod.id;
+  });
+}
+
+console.log(tmpProducts);
+
+// Пример: проверка значений элементов массива
+function isBiggerThan10(element, index, array) {
+  return element > 10;
+}
+[2, 5, 8, 1, 4].some(isBiggerThan10);  // false
+[12, 5, 8, 1, 4].some(isBiggerThan10); // true
+
+// Стрелочные функции предоставляют более краткий синтаксис для подобных проверок.
+[2, 5, 8, 1, 4].some(elem => elem > 10);  // false
+[12, 5, 8, 1, 4].some(elem => elem > 10); // true

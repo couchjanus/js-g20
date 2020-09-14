@@ -24,6 +24,7 @@
     transition: var(--transition);
     transform: translate(200%);
     border-left: 2px #ccc double;
+    z-index: 9999;
 }
 
 
