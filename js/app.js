@@ -167,7 +167,7 @@ class App {
         ];
        
         return `
-        <div class="col-xl-3 col-lg-4 col-sm-6">
+        <div class="col-lg-4 col-sm-6">
                <div class="product text-center" data-id="${data.id}">
                    <div class="position-relative mb-3">
                        <a class="d-block" href="detail.html">
@@ -280,15 +280,20 @@ class App {
         });
     }
 
+    // setCartTotal(cart) {
+    //     let tempTotal = 0;
+    //     let itemsTotal = 0;
+    //     cart.map(item => {
+    //       tempTotal += item.price * item.amount;
+    //       itemsTotal += item.amount;
+    //     });
+    //     this.cartTotal.textContent = parseFloat(tempTotal.toFixed(2));
+    //     this.countItems.textContent = itemsTotal;
+    // }
+
     setCartTotal(cart) {
-        let tempTotal = 0;
-        let itemsTotal = 0;
-        cart.map(item => {
-          tempTotal += item.price * item.amount;
-          itemsTotal += item.amount;
-        });
-        this.cartTotal.textContent = parseFloat(tempTotal.toFixed(2));
-        this.countItems.textContent = itemsTotal;
+        this.cartTotal.textContent = parseFloat(cart.reduce((previous, current) => previous + current.price * current.amount, 0).toFixed(2));
+        this.countItems.textContent = cart.reduce((previous, current) => previous + current.amount, 0);
     }
 
     populateCart(cart) {
@@ -298,7 +303,31 @@ class App {
 }
 // ==============================
 (function(){
+    const categories = document.querySelector('.categories');
+
     const app = new App();
     app.addToCarts();
     app.renderCart();
+
+    // Выбор определенной категории
+    const chooseCategory = event => {
+        event.preventDefault();
+
+        const target = event.target;
+        console.log(target);
+
+        if (target.classList.contains('category-item')) {
+            const category = target.dataset.category;
+            const categoryFilter = items => items.filter(item => item.category.includes(category));
+            app.makeShowcase(categoryFilter(products)); 
+        } else {
+            app.makeShowcase(products); 
+        }
+        app.addToCarts();
+    app.renderCart();
+    };
+
+    // обработчики событий
+    categories.addEventListener('click', chooseCategory); 
+
 })();

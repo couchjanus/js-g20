@@ -1,7 +1,3 @@
-const categories = document.querySelector('.categories');
-
-//  Используем замыкание и создаем функцию для фильтрации товаров по категории.
-const wrapperCategoryFilter = category => goods => goods.filter(item => item.category.includes(category));
 
 class App {
     cart = [];
@@ -68,7 +64,6 @@ class App {
             </ul>`;
     }
 
-
     createProductMarkup(data) {
         const overlayGroup = [
             {
@@ -108,6 +103,8 @@ class App {
     } 
 }
 
+const categories = document.querySelector('.categories');
+
 let app = new App();
 
 // Выбор определенной категории
@@ -117,21 +114,11 @@ const chooseCategory = event => {
 
     if (target.classList.contains('category-item')) {
         const category = target.dataset.category;
-        // Создаем альтернативный фильтр с помощью метода bind()
-        // const categoryFilter = goods => goods.filter(item => item.category.includes(category))
-        // categoryFilter.bind(this, category)
-        const categoryFilter = wrapperCategoryFilter(category);
-        console.log(category);
-        // console.log(products); 
-        new Promise((resolve, reject) =>
-            resolve(products)
-          )
-          .then(categoryFilter)
-          .then(response => {
-            app.makeShowcase(response);  
-            console.log(response);
-            });
-        };
+        const categoryFilter = items => items.filter(item => item.category.includes(category));
+        app.makeShowcase(categoryFilter(products)); 
+    } else {
+        app.makeShowcase(products); 
+    }
 };
 
 // обработчики событий

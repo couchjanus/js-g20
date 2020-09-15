@@ -33,10 +33,10 @@
                             <a href="#home" class="scroll-link">Home</a>
                         </li>
                         <li>
-                            <a href="#shop" class="scroll-link">Shop</a>
+                            <a href="shop.html" class="scroll-link">Shop</a>
                         </li>
                         <li>
-                            <a href="#contact" class="scroll-link">Contact</a>
+                            <a href="contact.html" class="scroll-link">Contact</a>
                         </li>
                         <li>
                             <a href="#pages" class="scroll-link">Pages</a>
@@ -129,25 +129,25 @@
         </section>
 
         <!--  -->
-        <section class="pt-5">
+        <section class="pt-5 categories">
             <header class="text-center">
                 <p class="small text-muted small text-uppercase mb-1">Carefully created collections</p>
                 <h2 class="h5 text-uppercase mb-4">Browse our categories</h2>
             </header>
             <div class="row">
                 <div class="col-md-4 mb-4 mb-md-0">
-                    <a class="category-item" href="shop.html"><img class="img-fluid" src="images/cat-img-1.jpg"
-                            alt=""><strong class="category-item-title">Clothes</strong></a>
+                    <a class="category-item" data-category="clothes" href="#"><img class="img-fluid" src="images/cat-img-1.jpg"
+                            alt=""><strong class="category-item-title category-item" data-category="clothes">Clothes</strong></a>
                 </div>
                 <div class="col-md-4 mb-4 mb-md-0">
-                    <a class="category-item mb-4" href="shop.html"><img class="img-fluid" src="images/cat-img-2.jpg"
-                            alt=""><strong class="category-item-title">Shoes</strong></a>
-                    <a class="category-item" href="shop.html"><img class="img-fluid" src="images/cat-img-3.jpg"
-                            alt=""><strong class="category-item-title">Watches</strong></a>
+                    <a class="category-item mb-4" data-category="shoes" href="#"><img class="img-fluid" src="images/cat-img-2.jpg"
+                            alt=""><strong class="category-item category-item-title" data-category="shoes">Shoes</strong></a>
+                    <a class="category-item" data-category="watches" href="#"><img class="img-fluid" src="images/cat-img-3.jpg"
+                            alt=""><strong class="category-item category-item-title" data-category="watches">Watches</strong></a>
                 </div>
                 <div class="col-md-4">
-                    <a class="category-item" href="shop.html"><img class="img-fluid" src="images/cat-img-4.jpg"
-                            alt=""><strong class="category-item-title">Electronics</strong></a>
+                    <a class="category-item" data-category="electronics" href="#"><img class="img-fluid" src="images/cat-img-4.jpg"
+                            alt=""><strong class="category-item category-item-title" data-category="electronics">Electronics</strong></a>
                 </div>
             </div>
         </section>
@@ -265,7 +265,7 @@
     </footer>
     
     <!-- scripts -->
-    <script src="js/data.js"></script>
+    <script src="js/db.js"></script>
     <script src="js/app.js"></script>
 
 </body>

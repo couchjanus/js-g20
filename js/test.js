@@ -1,105 +1,105 @@
 'use strict';
 
-if (window.sessionStorage && window.localStorage) {
-  // объекты sessionStorage и localstorage поддерживаются
-  console.log('объекты sessionStorage и localstorage поддерживаются');
-} else {
-  // объекты sessionStorage и localstorage не поддерживаются
-  console.log('объекты sessionStorage и localstorage не поддерживаются');
-}
+let cart = [
+  {
+    id:2,
+    image:"images/product-2.jpg",
+    name:"Kui Ye Chen’s AirPods",
+    price:121,
+    amount:3
+  },
+  {
+    id:4,
+    image:"images/product-4.jpg",
+    name:"Kui Ye Chen’s AirPods",
+    price:321,
+    amount:1
+  }
+];
 
-try { 
-      localStorage.setItem('ключ', 'значение');
-    } catch (e) {
-      if (e == QUOTA_EXCEEDED_ERR) {
-            console.log('Превышен лимит');  
-      }
-    }      
+// Используя цикл forEach:
+// let total = 0;
+let tempTotal = 0;
+let itemsTotal = 0;
 
-console.log(localStorage.length);
+// cart.forEach(function (item) {
+//     // The plus sign just coerces item.amount from a String to a Number
+//     itemsTotal += (+item.amount);
+// });
 
-// LocalStorage имеет всего 5 метода.
-   
-// Получить имя n-ного ключа в Storage
-console.log('Получить имя n-ного ключа в Storage: ', localStorage.key(0));
+// cart.map(function (item) {
+//   itemsTotal += (+item.amount);
+//   tempTotal += item.price * item.amount;
+// });
 
-//  Получить значение ключа.
-console.log('Получить значение ключа в Storage: ', localStorage.getItem('basket'));
-// Получить значение ключа.
-localStorage["Ключ"]
-   
-// Добавление  ключа в Storage или обновление его значение, если ключ уже существовал.
-localStorage.setItem('basket', 'true');
-console.log('Добавление  ключа в Storage или обновление его значение, если ключ уже существовал: ', localStorage.getItem('basket'));
-// Сохранение значения
-localStorage["Ключ"] = "Значение"
+// console.log(itemsTotal, tempTotal);
 
-// Storage.removeItem(Ключ) Удалит этот ключ из Storage.
-localStorage.removeItem('basket');
-console.log('Удалит этот ключ из Storage: ', localStorage.getItem('basket'));
+// Решение с reduce:
 
-// При вызове метод Storage.clear() удалит все ключи из Storage.
-localStorage.clear();
-console.log('localStorage.length = ', localStorage.length);
+itemsTotal = cart.reduce(function (previous, current) {
+  // console.log(current);
+  return previous + current.amount;
+}, 0);
+
+// Using arrow functions
+tempTotal = cart.reduce((previous, current) => previous + current.price * current.amount, 0);
+
+console.log(itemsTotal, tempTotal);
 
 
-function initStorage() {
-    try {
-        localStorage.getItem("basket") ?
-        localStorage.getItem("basket") :
-        localStorage.setItem("basket", “cart item”);
-    } catch (e) {
-        if (e == QUOTA_EXCEEDED_ERR) {
-            console.log('Превышен лимит localStorage'); 
-        }
+
+// Метод includes() определяет, содержит ли массив определённый элемент, возвращая в зависимости от этого true или false.
+
+[1, 2, 3].includes(2);     // true
+[1, 2, 3].includes(4);     // false
+[1, 2, 3].includes(3, 3);  // false
+[1, 2, 3].includes(3, -1); // true
+[1, 2, NaN].includes(NaN); // true
+
+// Если fromIndex больше или равен длине массива, то возвращается false. При этом поиск не производится.
+
+var arr = ['a', 'b', 'c'];
+arr.includes('c', 3);   // false
+arr.includes('c', 100); // false
+
+// Если fromIndex отрицательный, то вычисляется индекс, начиная с которого будет производиться поиск элемента searchElement. Если вычисленный индекс меньше нуля, то поиск будет производиться во всём массиве.
+
+// длина массива равна 3
+// fromIndex равен -100
+// вычисленный индекс равен 3 + (-100) = -97
+
+var arr = ['a', 'b', 'c'];
+arr.includes('a', -100); // true
+arr.includes('b', -100); // true
+arr.includes('c', -100); // true
+
+
+// console.log(products.filter(item => item.category));
+
+products.forEach(function (item) {
+    if (item.category == "electronics") {
+        data.push(item);
     }
- }
-
-if (initStorage()) {
-  console.log(typeof localStorage["basket"]);
-}
-
-// Удаление значения
-localStorage.removeItem("Ключ")
- 
-// Удаление значения
-delete localStorage["Ключ"]
-
-// Очистка всего хранилища
-localStorage.clear()
-localStorage.setItem('myKey', 'myValue');
-
-var localValue = localStorage.getItem('myKey');
-localStorage.removeItem("myKey"); // удаляем
-localStorage.clear() // очищаем все хранилище
-
-// То же самое, только с квадратными скобками:
-localStorage["Ключ"] = "Значение" //установка значения
-localStorage["Ключ"] // Получение значения
-delete localStorage["Ключ"] // Удаление значения
-    
-// Проверка существует ли в массиве какой-нибудь элемент с elem.id = id.
-let id = 1;
-
-let exist = tmpProducts.some(elem => {
-  return elem.id === id;
 });
 
-if(tmpProducts.length > 0){
-  let exist = tmpProducts.some(elem => {
-    return elem.id === prod.id;
-  });
-}
+// С filter:
+let data = products.filter(function (item) {
+    return item.category == "electronics";
+});
+ 
+// Using ES6
+let data = products.filter((item) => item.category == "electronics" );
 
-console.log(tmpProducts);
 
-// Пример: проверка значений элементов массива
-function isBiggerThan10(element, index, array) {
-  return element > 10;
-}
-[2, 5, 8, 1, 4].some(isBiggerThan10);  // false
-[12, 5, 8, 1, 4].some(isBiggerThan10); // true
+const category = "electronics";
 
-// Стрелочные функции предоставляют более краткий синтаксис для подобных проверок.
-[2, 5, 8, 1, 4].some(elem => elem > 10);  // false
-[12, 5, 8, 1, 4].some(elem => elem > 10); // true
+// Метод includes() определяет, содержит ли массив определённый элемент, возвращая в зависимости от этого true или false.
+
+// console.log(products.filter(item => item.category.includes(category)));
+
+// const category = target.dataset.category;
+// Создаем фильтр
+
+const categoryFilter = items => items.filter(item => item.category.includes(category));
+
+console.log(categoryFilter(products));
