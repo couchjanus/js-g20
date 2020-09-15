@@ -5,45 +5,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Peculiar Shopahlc</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,800">
     <link href="css/reset.css" rel="stylesheet">
+    <link href="css/variables.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/grid.css" rel="stylesheet">
+    <link href="css/form.css" rel="stylesheet">
     <link href="css/nav.css" rel="stylesheet">
     <link href="css/effect.css" rel="stylesheet">
     <link href="css/product.css" rel="stylesheet">
     <link href="css/animations.css" rel="stylesheet">
+
+    <link href="css/sidebar.css" rel="stylesheet">
 </head>
 
 <body>
-    <!-- navbar-->
-    <header class="header bg-white">
-        <div class="container px-3">
-            <nav class="navbar px-0">
-
-                <input class="trigger" type="checkbox" id="hamburgerButton">
-                <label for="hamburgerButton"><a class="navbar-brand" href="index.html"><span
-                            class="font-weight-bold text-uppercase text-dark">Shopaholic</span></a></label>
-                <div class="collapse">
-                    <a class="navbar-brand" href="index.html"><span
-                            class="font-weight-bold text-uppercase text-dark">Shopaholic</span></a>
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <!-- Link-->
-                            <a class="nav-link active" href="index.html">Home</a>
+    <div class="overlay"></div>
+    <header class="bg-white">
+        <nav id="nav">
+            <div class="nav-center">
+                <div class="nav-header">
+                    <span class="font-weight-bold text-uppercase text-dark logo">Shopaholic</span>
+                </div>
+                <div class="links-container">
+                    <ul class="links effect-brackets">
+                        <li>
+                            <a href="#home" class="scroll-link">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <!-- Link-->
-                            <a class="nav-link" href="shop.html">Shop</a>
+                        <li>
+                            <a href="#shop" class="scroll-link">Shop</a>
                         </li>
-                        <li class="nav-item">
-                            <!-- Link-->
-                            <a class="nav-link" href="contact.html">Contact</a>
+                        <li>
+                            <a href="#contact" class="scroll-link">Contact</a>
                         </li>
-                        <!-- dropdown-menu -->
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Pages</a>
+                        <li>
+                            <a href="#pages" class="scroll-link">Pages</a>
                             <div hidden>
                                 <a href="blog.html">Blog</a>
                                 <a href="about.html">About</a>
@@ -53,26 +48,42 @@
                             </div>
                         </li>
                     </ul>
-                    <ul class="navbar-nav ml-auto">
-                        <!-- cart -->
-                        <li class="nav-item">
-                            <a class="nav-link" href="cart.html"> <i class="fas fa-dolly-flatbed text-gray"></i>Cart<small class="text-gray">(2)</small></a>
-                        </li>
-                        <!-- like -->
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"> <i class="far fa-heart"></i><small class="text-gray">
-                                    (0)</small></a>
-                        </li>
-                        <!-- login -->
-                        <li class="nav-item">
-                            <a class="nav-link" href="login.html"> <i class="fas fa-user-alt text-gray"></i>Login</a>
-                        </li>
-                    </ul>
                 </div>
-
-            </nav>
-        </div>
+                <ul class="navbar-tool effect-ease">
+                    <li>
+                        <a class="cart-toggle" href="#"> <i class="fas fa-dolly-flatbed text-gray"></i>(<small class="text-gray count-items">0</small>)</a>
+                    </li>
+                    <li>
+                        <a class="" href="#"> <i class="far fa-heart"></i><small class="text-gray"> (0)</small></a>
+                    </li>
+                    <li>
+                        <a class="" href="login.html"> <i class="fas fa-user-alt text-gray"></i></a>
+                    </li>
+                </ul>
+                <button class="nav-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
     </header>
+    <!-- aside -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <button class="close-btn"><i class="fas fa-times"></i></button>
+            <h5 class="logo">Shopping Cart</h5>
+        </div>
+
+        <!-- cart items -->
+        <div class="cart-items">
+
+        </div>
+        <!-- buttons -->
+        <div class="cart-footer">
+            <h3>your total : $<span class="cart-total">0</span></h3>
+            <button class="clear-cart">Clear Cart</button>
+        </div>
+
+    </aside>
     <div class="container">
         <!-- HERO SECTION-->
             <article class="container carousel">
@@ -149,34 +160,34 @@
             <div class="container p-0">
                 <div class="row">
                     <!-- SHOP SIDEBAR-->
-                    <div class="col-3 order-2">
+                    <div class="col-3 order-2 categories">
                         <h5 class="text-uppercase mb-4">Categories</h5>
                         <div class="py-2 px-4 bg-dark text-white mb-3"><strong class="small text-uppercase font-weight-bold">Fashion &amp; Acc</strong></div>
                         <ul class="list-unstyled small text-muted pl-4 font-weight-normal">
-                            <li class="mb-2"><a class="reset-anchor" href="#">Women's T-Shirts</a></li>
-                            <li class="mb-2"><a class="reset-anchor" href="#">Men's T-Shirts</a></li>
-                            <li class="mb-2"><a class="reset-anchor" href="#">Dresses</a></li>
-                            <li class="mb-2"><a class="reset-anchor" href="#">Novelty socks</a></li>
-                            <li class="mb-2"><a class="reset-anchor" href="#">Women's sunglasses</a></li>
-                            <li class="mb-2"><a class="reset-anchor" href="#">Men's sunglasses</a></li>
+                            <li class="mb-2"><a class="reset-anchor category-item" data-category="clothes" href="#">Women's T-Shirts</a></li>
+                            <li class="mb-2"><a class="reset-anchor category-item" data-category="clothes" href="#">Men's T-Shirts</a></li>
+                            <li class="mb-2"><a class="reset-anchor category-item" data-category="clothes" href="#">Dresses</a></li>
+                            <li class="mb-2"><a class="reset-anchor category-item" data-category="clothes" href="#">Novelty socks</a></li>
+                            <li class="mb-2"><a class="reset-anchor category-item" data-category="clothes" href="#">Women's sunglasses</a></li>
+                            <li class="mb-2"><a class="reset-anchor category-item" data-category="clothes" href="#">Men's sunglasses</a></li>
                         </ul>
                         <div class="py-2 px-4 bg-light mb-3"><strong class="small text-uppercase font-weight-bold">Health &amp; Beauty</strong></div>
                         <ul class="list-unstyled small text-muted pl-4 font-weight-normal">
-                            <li class="mb-2"><a class="reset-anchor" href="#">Shavers</a></li>
-                            <li class="mb-2"><a class="reset-anchor" href="#">bags</a></li>
-                            <li class="mb-2"><a class="reset-anchor" href="#">Cosmetic</a></li>
-                            <li class="mb-2"><a class="reset-anchor" href="#">Nail Art</a></li>
-                            <li class="mb-2"><a class="reset-anchor" href="#">Skin Masks &amp; Peels</a></li>
-                            <li class="mb-2"><a class="reset-anchor" href="#">Korean cosmetics</a></li>
+                            <li class="mb-2"><a class="reset-anchor category-item" data-category="watches" href="#">Watches</a></li>
+                            <li class="mb-2"><a class="reset-anchor category-item" data-category="bags" href="#">bags</a></li>
+                            <li class="mb-2"><a class="reset-anchor category-item" data-category="cosmetics" href="#">Cosmetic</a></li>
+                            <li class="mb-2"><a class="reset-anchor category-item" data-category="cosmetics" href="#">Nail Art</a></li>
+                            <li class="mb-2"><a class="reset-anchor category-item" data-category="cosmetics" href="#">Skin Masks &amp; Peels</a></li>
+                            <li class="mb-2"><a class="reset-anchor category-item" data-category="cosmetics" href="#">Korean cosmetics</a></li>
                         </ul>
                         <div class="py-2 px-4 bg-light mb-3"><strong class="small text-uppercase font-weight-bold">Electronics</strong></div>
                         <ul class="list-unstyled small text-muted pl-4 font-weight-normal mb-5">
-                            <li class="mb-2"><a class="reset-anchor" href="#">Electronics</a></li>
-                            <li class="mb-2"><a class="reset-anchor" href="#">USB Flash drives</a></li>
-                            <li class="mb-2"><a class="reset-anchor" href="#">Headphones</a></li>
-                            <li class="mb-2"><a class="reset-anchor" href="#">Portable speakers</a></li>
-                            <li class="mb-2"><a class="reset-anchor" href="#">Cell Phone bluetooth headsets</a></li>
-                            <li class="mb-2"><a class="reset-anchor" href="#">Keyboards</a></li>
+                            <li class="mb-2"><a class="reset-anchor category-item" data-category="electronics" href="#">Electronics</a></li>
+                            <li class="mb-2"><a class="reset-anchor category-item" data-category="electronics" href="#">USB Flash drives</a></li>
+                            <li class="mb-2"><a class="reset-anchor category-item" data-category="electronics" href="#">Headphones</a></li>
+                            <li class="mb-2"><a class="reset-anchor category-item" data-category="electronics" href="#">Portable speakers</a></li>
+                            <li class="mb-2"><a class="reset-anchor category-item" data-category="electronics" href="#">Cell Phone bluetooth headsets</a></li>
+                            <li class="mb-2"><a class="reset-anchor category-item" data-category="electronics" href="#">Keyboards</a></li>
                         </ul>
 
                     </div>
@@ -194,7 +205,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row showcase">
                             <!-- PRODUCT-->
                             <div class="col-lg-4 col-sm-6">
                                 <div class="product text-center">
@@ -444,7 +455,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white">
+    <footer class="bg-dark text-white mt-3">
         <!-- container -->
         <div class="container py-4">
             <!-- row -->
@@ -468,16 +479,8 @@
                         <li><a class="footer-link" href="#">FAQs</a></li>
                     </ul>
                 </div>
-                <div class="col-md-4">
-                    <h6 class="text-uppercase">Social media</h6>
-                    <ul class="list-unstyled">
-                        <li><a class="footer-link" href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
-                        <li><a class="footer-link" href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
-                        <li><a class="footer-link" href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
-                        <li><a class="footer-link" href="#"><i class="fab fa-google-plus"></i> Google</a></li>
-                    </ul>
-                </div>
-            </div>
+                <div class="col-md-4"></div>
+             </div>
             <div class="border-top pt-4">
                 <!-- 2 columns -->
                 <div class="row">
@@ -491,6 +494,11 @@
             </div>
         </div>
     </footer>
+
+    <!-- scripts -->
+    <script src="js/db.js"></script>
+    <!-- <script src="js/app.js"></script> -->
+    <script src="js/catalog.js"></script>
 </body>
 
 </html>
