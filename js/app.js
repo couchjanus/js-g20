@@ -279,7 +279,7 @@ class App {
             }
         });
     }
-
+// old code 
     // setCartTotal(cart) {
     //     let tempTotal = 0;
     //     let itemsTotal = 0;
@@ -290,7 +290,7 @@ class App {
     //     this.cartTotal.textContent = parseFloat(tempTotal.toFixed(2));
     //     this.countItems.textContent = itemsTotal;
     // }
-
+// new code
     setCartTotal(cart) {
         this.cartTotal.textContent = parseFloat(cart.reduce((previous, current) => previous + current.price * current.amount, 0).toFixed(2));
         this.countItems.textContent = cart.reduce((previous, current) => previous + current.amount, 0);
