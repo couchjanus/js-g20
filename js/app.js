@@ -3,6 +3,7 @@
 const sidebar = document.querySelector(".sidebar");
 const cartItems = document.querySelector(".cart-items");
 const clearCart = document.querySelector(".clear-cart");
+const url = 'https://my-json-server.typicode.com/couchjanus/db/data';
 
 class Storage {
     static saveProducts(products) {
@@ -11,6 +12,10 @@ class Storage {
     static getProduct(id) {
       let products = JSON.parse(localStorage.getItem("products"));
       return products.find(product => product.id === +(id));
+    }
+    static getProducts() {
+        let products = JSON.parse(localStorage.getItem("products"));
+        return products;
     }
     static saveCart(cart) {
       localStorage.setItem("basket", JSON.stringify(cart));
@@ -23,7 +28,7 @@ class Storage {
 }
 
 class Product {
-    getProducts() {
+    getProducts(products) {
         return products.map(item => {
                 const name = item.name;
                 const price = item.price;
@@ -43,7 +48,6 @@ class App {
     constructor() { 
         const toggleBtn = document.querySelector(".cart-toggle");
         const closeBtn = document.querySelector(".close-btn");
-
         const socialGroup = [
             {
                 liClass:'',
@@ -70,21 +74,12 @@ class App {
                 capture:'Google'
             },
         ];
-
-        // closeBtn.addEventListener("click", () => sidebar.classList.remove("show-sidebar"));
         closeBtn.addEventListener("click", () => this.closeCart());
         toggleBtn.addEventListener("click", () => this.openCart());
-        
         this.navbarToggle();
-        this.makeShowcase(products);
         document.querySelector('footer div.row').lastElementChild.innerHTML=this.makeLiGroup(socialGroup, 'list-unstyled footer-socials social-icon', '<h6 class="text-uppercase">Social media</h6>');  
-
-        let data = new Product();
-        Storage.saveProducts(data.getProducts());
-        
         this.cart = Storage.getCart();
     }
-    
 
     // methods
 
@@ -101,7 +96,6 @@ class App {
         sidebar.classList.remove("show-sidebar");
         document.querySelector(".overlay").classList.remove("active");
     }
-
 
     makeShowcase(products) {
         let result = '';
@@ -210,8 +204,9 @@ class App {
         cartItems.appendChild(div);
     }
     
-    getProduct = (id) => products.find(product => product.id === +(id));
-        
+    // getProduct = (id) => products.find(product => product.id === +(id));
+    getProduct = (id) => Storage.getProducts().find(product => product.id === +(id));
+    
     addToCarts() {
         const addToCartButtons = [...document.querySelectorAll(".add-to-cart")];
         addToCartButtons.forEach(button => {
@@ -228,7 +223,6 @@ class App {
                 }else {
                     let cartItem = { ...product, amount: 1 };
                     this.cart = [...this.cart, cartItem];
-                    // this.addCartItem(cartItem);
                 }
                 Storage.saveCart(this.cart);
                 this.setCartTotal(this.cart);
@@ -279,18 +273,8 @@ class App {
             }
         });
     }
-// old code 
-    // setCartTotal(cart) {
-    //     let tempTotal = 0;
-    //     let itemsTotal = 0;
-    //     cart.map(item => {
-    //       tempTotal += item.price * item.amount;
-    //       itemsTotal += item.amount;
-    //     });
-    //     this.cartTotal.textContent = parseFloat(tempTotal.toFixed(2));
-    //     this.countItems.textContent = itemsTotal;
-    // }
-// new code
+
+    // new code
     setCartTotal(cart) {
         this.cartTotal.textContent = parseFloat(cart.reduce((previous, current) => previous + current.price * current.amount, 0).toFixed(2));
         this.countItems.textContent = cart.reduce((previous, current) => previous + current.amount, 0);
@@ -305,29 +289,42 @@ class App {
 (function(){
     const categories = document.querySelector('.categories');
 
-    const app = new App();
-    app.addToCarts();
-    app.renderCart();
+    fetch(url)
+        .then( (response) => {
+            if (response.status !== 200) {
+                console.log('Looks like there was a problem. Status Code: ' + response.status);
+                return;
+            }
+            response.json().then( (products) => {
+                const app = new App();
+                
+                let data = new Product();
+                Storage.saveProducts(data.getProducts(products));
+                
+                app.makeShowcase(products);
+                app.addToCarts();
+                app.renderCart();
+                // Выбор определенной категории
+                const chooseCategory = event => {
+                    event.preventDefault();
 
-    // Выбор определенной категории
-    const chooseCategory = event => {
-        event.preventDefault();
+                    const target = event.target;
+                    console.log(target);
 
-        const target = event.target;
-        console.log(target);
-
-        if (target.classList.contains('category-item')) {
-            const category = target.dataset.category;
-            const categoryFilter = items => items.filter(item => item.category.includes(category));
-            app.makeShowcase(categoryFilter(products)); 
-        } else {
-            app.makeShowcase(products); 
-        }
-        app.addToCarts();
-    app.renderCart();
-    };
-
-    // обработчики событий
-    categories.addEventListener('click', chooseCategory); 
-
+                    if (target.classList.contains('category-item')) {
+                        const category = target.dataset.category;
+                        const categoryFilter = items => items.filter(item => item.category.includes(category));
+                        app.makeShowcase(categoryFilter(products)); 
+                    } else {
+                        app.makeShowcase(products); 
+                    }
+                    app.addToCarts();
+                app.renderCart();
+                };
+                categories.addEventListener('click', chooseCategory); 
+            });
+        })
+        .catch( (err) => {
+            console.log('Fetch Error :-S', err);
+        });
 })();
